@@ -5,7 +5,7 @@ import requests
 import uuid
 import os
 
-def write(event_string):
+def write_logs_to_elastic(event_string):
     logger = logging.getLogger("app")
     logger.setLevel(logging.DEBUG)
     handler = logging.FileHandler('/home/tzur/final-client/elvis.json')
