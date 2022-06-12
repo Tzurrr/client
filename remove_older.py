@@ -1,7 +1,6 @@
 import datetime
 import redis
 import os
-import dot_finder
 
 def remove(array: list):
     r = redis.Redis()
