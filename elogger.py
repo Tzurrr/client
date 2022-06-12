@@ -22,6 +22,6 @@ def write_logs_to_elastic(event_string):
     os.remove("/home/tzur/final-client/elvis.json")
 
     doc_UUID = uuid.uuid4()
-    resp = requests.put(url=f"http://13.81.211.207:9200/{event_string}/_doc/{doc_UUID}", json=log_json,
+    resp = requests.post(url=f"http://13.81.211.207:9200/{event_string}/_doc/{doc_UUID}", json=log_json,
                         headers={'Content-Type': 'application/json'})
 #    print(resp.json())
