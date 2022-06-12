@@ -19,7 +19,7 @@ def send(filepath: str, *args):
     
     arr = [("files", open(get_val, "rb")), ("files", open(filepath, "rb"))]
     resp = requests.post(url=url_path, files=arr)
-    if str(resp.json) == "<bound method Response.json of <Response [200]>>":
+    if resp.status_code == 200:
         elogger.write_logs_to_elastic("sent")
         os.remove(get_val)
         os.remove(filepath)
