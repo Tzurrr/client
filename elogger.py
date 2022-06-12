@@ -17,7 +17,7 @@ def write_logs_to_elastic(event_string):
     # TODO: add value check
 
     logger.info(event_string, extra={"http.request.method": "get", "UUID": json_UUID})
-    log_file = file_to_var.json_to_var("/home/tzur/final-client/elvis.json")
+    log_json = file_to_var.json_to_var("/home/tzur/final-client/elvis.json")
 
     os.remove("/home/tzur/final-client/elvis.json")
 
