@@ -39,20 +39,15 @@ def process_queue(q):
 
             elif os.path.splitext(event.src_path)[0][-1] == "a":
                 #print("first half")
-                r.set(f"{os.path.splitext(event.src_path)[0][:-2]}", event.src_path)
-                first_half_arr.append((event.src_path, datetime.datetime.utcnow()))
-#                if len(first_half_arr) > 0:
- #                   is_valid = verifier.verify(first_half_arr, second_half_arr)
-  #                  if is_valid:
-   #                     sender.send(event.src_path, second_half_arr)
+                r.set(f"{os.path.splitext(event.src_path)[0][:-2]}", event.src_path, ex=60)
+#                r.expire(f"{os.path.splitext(event.src_path)[0][:-2]}", 60, nx=False, xx=False, gt=False, lt=False)
 
             elif os.path.splitext(event.src_path)[0][-1] == "b":
                 #print("second half")
-                second_half_arr.append((event.src_path, datetime.datetime.utcnow()))
                 if len(first_half_arr) > 0:
-                    is_valid = verifier.verify(first_half_arr, second_half_arr)
-                    if is_valid:
-                        sender.send(event.src_path)
+                    #is_valid = verifier.verify(first_half_arr, second_half_arr)
+                    #if is_valid:
+                    sender.send(event.src_path)
 
 
 class FileWatchdog(PatternMatchingEventHandler):
@@ -68,7 +63,7 @@ class FileWatchdog(PatternMatchingEventHandler):
         self.process(event)
 
 if __name__ == "__main__":
-    r = redis.StrictRedis('localhost', 6379, charset="utf-8", decode_responses=True)
+    r = redis.Redis('localhost', 6379, charset="utf-8")#, decode_responses=True)
     watchdog_queue = Queue()
 
     for file in os.listdir(dir_path):
