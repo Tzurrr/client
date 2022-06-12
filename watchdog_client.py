@@ -39,7 +39,7 @@ def process_queue(q):
 
             elif os.path.splitext(event.src_path)[0][-1] == "a":
                 #print("first half")
-                r.set(f"os.path.splitext(event.src_path)[0][:-2]}", event.src_path)
+                r.set(f"{os.path.splitext(event.src_path)[0][:-2]}", event.src_path)
                 first_half_arr.append((event.src_path, datetime.datetime.utcnow()))
 #                if len(first_half_arr) > 0:
  #                   is_valid = verifier.verify(first_half_arr, second_half_arr)
