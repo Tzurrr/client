@@ -12,7 +12,6 @@ def write_logs_to_elastic(event_string):
     handler.setFormatter(ecs_logging.StdlibFormatter())
     logger.addHandler(handler)
     json_UUID = uuid.uuid4()
-    #keywords_arr = ["arrivedtoserver", "sent", "didntsent", "wrote"]
     
     # TODO: add value check
 
