@@ -6,15 +6,14 @@ import time
 import urllib
 
 def send(filepath: str, *args):
-    r = redis.Redis()
-    get_val = r.get(f"{os.path.splitext(filepath)[0][:-2]}")
-    
-  #  if get_val == filepath:
-#        for i in args:
- #           print(i)
-        #    if i[0][:dot] == filepath[:dot-1] +"b":
-         #       get_val = i[0]
+    local_redis = redis.Redis()
 
+    try:
+        get_val = local_redis.get(f"{os.path.splitext(filepath)[0][:-2]}")
+    except Exception:
+        os.remove(filepath)
+        pass
+    
     arr = [("files", open(get_val, "rb")), ("files", open(filepath, "rb"))]
     resp = requests.post(url="http://127.0.0.1:80/", files=arr)
     if str(resp.json) == "<bound method Response.json of <Response [200]>>":
