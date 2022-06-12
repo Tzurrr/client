@@ -1,3 +1,4 @@
 {
-	"kibanas_url": "http://13.81.211.207:9200"
+	"kibanas_url": "http://13.81.211.207:9200",
+	"HAProxys_url": "http://127.0.0.1:80/"
 }
