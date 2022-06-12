@@ -7,7 +7,6 @@ import urllib
 
 def send(filepath: str, *args):
     r = redis.Redis()
-    dot = dot_finder.find(filepath)
     get_val = r.get(f"{os.path.splitext(filepath)[0][:-2]}")
     
   #  if get_val == filepath:
