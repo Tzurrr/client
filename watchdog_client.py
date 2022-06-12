@@ -31,7 +31,7 @@ def process_queue(q):
         second_half_arr = remove_older.remove(second_half_arr)
         if not q.empty():
             event = q.get()
-            elogger.write("arrivedtoserver")
+            elogger.write_logs_to_elastic("arrivedtoserver")
 
             if os.path.splitext(event.src_path)[0][-1] != "a" and os.path.splitext(event.src_path)[0][-1] != "b":
                # print("irrelevant")
