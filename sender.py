@@ -8,6 +8,9 @@ import urllib
 def send(filepath: str, *args):
     local_redis = redis.Redis()
 
+    conf_dict = config_file_parser.parse()
+    url_path = conf_dict["HAProxys_url"]
+
     try:
         get_val = local_redis.get(f"{os.path.splitext(filepath)[0][:-2]}")
     except Exception:
@@ -15,7 +18,7 @@ def send(filepath: str, *args):
         pass
     
     arr = [("files", open(get_val, "rb")), ("files", open(filepath, "rb"))]
-    resp = requests.post(url="http://127.0.0.1:80/", files=arr)
+    resp = requests.post(url=url_path, files=arr)
     if str(resp.json) == "<bound method Response.json of <Response [200]>>":
         elogger.write_logs_to_elastic("sent")
         os.remove(get_val)
