@@ -4,6 +4,7 @@ import ecs_logging
 import requests
 import uuid
 import os
+import file_to_var
 
 def write_logs_to_elastic(event_string):
     logger = logging.getLogger("app")
@@ -16,9 +17,7 @@ def write_logs_to_elastic(event_string):
     # TODO: add value check
 
     logger.info(event_string, extra={"http.request.method": "get", "UUID": json_UUID})
-    log_file = open("/home/tzur/final-client/elvis.json", "r")
-    log_json = json.load(log_file)
-    log_file.close()
+    log_file = file_to_var.json_to_var("/home/tzur/final-client/elvis.json")
 
     os.remove("/home/tzur/final-client/elvis.json")
 
