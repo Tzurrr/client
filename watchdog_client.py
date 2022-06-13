@@ -17,9 +17,11 @@ import verifier
 import elogger
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
+import json_parser
 
 
-dir_path = "/home/tzur/all-the-photos"
+conf = json_parser.parse_json_to_var("/home/tzur/client/config.json")
+dir_path = conf["photos_dir"]
 
 def process_queue(q):
     counter = 0
