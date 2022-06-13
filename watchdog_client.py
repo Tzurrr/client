@@ -45,8 +45,10 @@ class FileWatchdog(PatternMatchingEventHandler):
         self.process(event)
 
 if __name__ == "__main__":
-    r = redis.Redis('localhost', 6379, charset="utf-8")
     watchdog_queue = Queue()
+    local_conf = json_parser.parse_json_to_var("/home/tzur/client/config.json")
+    local_conf = local_conf["redis_conf"]
+    r = redis.Redis(local_conf["host"], local_conf["port"], charset=local_conf["charset"])
 
     for file in os.listdir(dir_path):
         filename = os.path.join(dir_path, file)
