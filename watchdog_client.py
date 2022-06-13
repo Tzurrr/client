@@ -33,9 +33,8 @@ def process_queue(watchdog_queue):
             sender.send_files_to_server(event.src_path)
 
 
-class FileWatchdog(PatternMatchingEventHandler):
+class FileWatchdog(FileSystemEventHandler):
     def __init__(self, queue):
-        PatternMatchingEventHandler.__init__(self, patterns=["*"], ignore_patterns=None, ignore_directories=False, case_sensitive=True)
         self.queue = queue
 
     def process(self, event):
