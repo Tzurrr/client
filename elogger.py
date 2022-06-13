@@ -18,8 +18,11 @@ def write_logs_to_elastic(event_string):
     
     logger.info(event_string, extra={"http.request.method": "get", "UUID": json_UUID})
     log_json = json_parser.parse_json_to_var(conf_dict["logfile_path"])
-
-    os.remove(conf_dict["logfile_path"])
+    
+    try:
+        os.remove(conf_dict["logfile_path"])
+    except Exception:
+        pass
 
     doc_UUID = uuid.uuid4()
     resp = requests.post(url=f"{url_path}/{event_string}/_doc/{doc_UUID}", json=log_json,
