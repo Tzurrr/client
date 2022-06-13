@@ -36,18 +36,13 @@ def process_queue(q):
             elogger.write_logs_to_elastic("arrivedtoserver")
 
             if os.path.splitext(event.src_path)[0][-1] != "a" and os.path.splitext(event.src_path)[0][-1] != "b":
-               # print("irrelevant")
                 os.remove(event.src_path)
 
             elif os.path.splitext(event.src_path)[0][-1] == "a":
-                #print("first half")
                 r.set(f"{os.path.splitext(event.src_path)[0][:-2]}", event.src_path, ex=60)
 
             elif os.path.splitext(event.src_path)[0][-1] == "b":
-                #print("second half")
                 if len(first_half_arr) > 0:
-                    #is_valid = verifier.verify(first_half_arr, second_half_arr)
-                    #if is_valid:
                     sender.send_files_to_server(event.src_path)
 
 
@@ -58,7 +53,6 @@ class FileWatchdog(PatternMatchingEventHandler):
 
     def process(self, event):
         self.queue.put(event)
-#        print(("a", event.event_type))
 
     def on_closed(self, event):
         self.process(event)
@@ -77,13 +71,11 @@ if __name__ == "__main__":
     observer.schedule(event_handler, path=dir_path)
     observer.start()
     try:
-   #     while (True):
         with ProcessPoolExecutor() as executor:
             a = executor.submit(process_queue(watchdog_queue), watchdog_queue)
             a.result()
 
-    #        time.sleep(10)
-
     except KeyboardInterrupt:
         observer.stop()
         observer.join()
+
