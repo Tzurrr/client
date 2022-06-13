@@ -22,7 +22,7 @@ import json_parser
 conf = json_parser.parse_json_to_var("/home/tzur/client/config.json")
 dir_path = conf["photos_dir"]
 
-def process_queue(q):
+def process_queue(watchdog_queue):
     counter = 0
     first_half_arr = []
     second_half_arr = []
@@ -30,8 +30,8 @@ def process_queue(q):
         counter += 1
         first_half_arr = remove_older.remove(first_half_arr)
         second_half_arr = remove_older.remove(second_half_arr)
-        if not q.empty():
-            event = q.get()
+        if not watchdog_queue.empty():
+            event = watchdog_queue.get()
             elogger.write_logs_to_elastic("arrivedtoserver")
 
             if os.path.splitext(event.src_path)[0][-1] != "a" and os.path.splitext(event.src_path)[0][-1] != "b":
