@@ -57,7 +57,7 @@ class FileWatchdog(PatternMatchingEventHandler):
         self.process(event)
 
 if __name__ == "__main__":
-    r = redis.Redis('localhost', 6379, charset="utf-8")#, decode_responses=True)
+    r = redis.Redis('localhost', 6379, charset="utf-8")
     watchdog_queue = Queue()
 
     for file in os.listdir(dir_path):
