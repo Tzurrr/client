@@ -28,4 +28,3 @@ def send(filepath: str, *args):
             os.remove(filepath)
         except Exception:
             pass
-    print(resp.json)
