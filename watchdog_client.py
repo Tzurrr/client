@@ -24,25 +24,13 @@ dir_path = conf["photos_dir"]
 
 def process_queue(watchdog_queue):
     counter = 0
-    first_half_arr = []
-    second_half_arr = []
     while True:
         counter += 1
-        first_half_arr = remove_older.remove(first_half_arr)
-        second_half_arr = remove_older.remove(second_half_arr)
         if not watchdog_queue.empty():
             event = watchdog_queue.get()
             elogger.write_logs_to_elastic("arrivedtoserver")
-
-            if os.path.splitext(event.src_path)[0][-1] != "a" and os.path.splitext(event.src_path)[0][-1] != "b":
-                os.remove(event.src_path)
-
-            elif os.path.splitext(event.src_path)[0][-1] == "a":
-                r.set(f"{os.path.splitext(event.src_path)[0][:-2]}", event.src_path, ex=60)
-
-            elif os.path.splitext(event.src_path)[0][-1] == "b":
-                if len(first_half_arr) > 0:
-                    sender.send_files_to_server(event.src_path)
+            r.set(f"{os.path.splitext(event.src_path)[0][:-2]}", event.src_path, ex=60)
+            sender.send_files_to_server(event.src_path)
 
 
 class FileWatchdog(PatternMatchingEventHandler):
