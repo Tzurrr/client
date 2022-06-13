@@ -4,11 +4,12 @@ import requests
 import elogger
 import time
 import urllib
+import json_parser
 
 def send_files_to_server(filepath: str, *args):
     local_redis = redis.Redis()
 
-    conf_dict = config_file_parser.parse()
+    conf_dict = json_parser.parse_json_to_var("/home/tzur/client/config.json")
     url_path = conf_dict["HAProxys_url"]
 
     try:
