@@ -13,7 +13,6 @@ import os
 from watchdog.events import FileCreatedEvent, FileClosedEvent
 import remove_older
 import sender
-import verifier
 import elogger
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
