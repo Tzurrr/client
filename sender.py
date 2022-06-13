@@ -21,11 +21,11 @@ def send(filepath: str, *args):
     resp = requests.post(url=url_path, files=arr)
     if resp.status_code == 200:
         elogger.write_logs_to_elastic("sent")
-        os.remove(get_val)
-        os.remove(filepath)
-        print(resp.json)
     else:
         elogger.write_logs_to_elastic("didntsent")
-        os.remove(get_val)
-        os.remove(filepath)
-        print(resp.json)
+        try:
+            os.remove(get_val)
+            os.remove(filepath)
+        except Exception:
+            pass
+    print(resp.json)
