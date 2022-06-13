@@ -5,7 +5,7 @@ import elogger
 import time
 import urllib
 
-def send(filepath: str, *args):
+def send_files_to_server(filepath: str, *args):
     local_redis = redis.Redis()
 
     conf_dict = config_file_parser.parse()
