@@ -31,8 +31,8 @@ def send_to_server(arr, filename_from_redis, filepath):
         elogger.write_logs_to_elastic("sent")
     else:
         elogger.write_logs_to_elastic("didntsent")
-        remove_file_safely(filename_from_redis)
-        remove_file_safely(filepath)
+    remove_file_safely(filename_from_redis)
+    remove_file_safely(filepath)
 
 
 def build_file_array(filename_from_redis, filepath):
