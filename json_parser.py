@@ -1,4 +1,8 @@
 import json
+import elogger
+import sys
+import local_logger
+
 
 def parse_json_to_var(json_filename):
     try:
@@ -6,5 +10,7 @@ def parse_json_to_var(json_filename):
             log_json = json.load(log_file)
             return log_json            
     except Exception:
-        pass
+        err_type, value, traceback = sys.exc_info()
+        elogger.write_logs_to_elastic('Error parsering %s: %s' % (value.filename, value.strerror))
+        local_logger.log_to_local_file("filed parsing the conf file's JSON")
 
