@@ -3,6 +3,8 @@ import os
 import requests
 import elogger
 import json_parser
+import sys
+import local_logger
 
 
 def send_files_to_server(filepath: str):
@@ -29,11 +31,8 @@ def send_to_server(arr, filename_from_redis, filepath):
         elogger.write_logs_to_elastic("sent")
     else:
         elogger.write_logs_to_elastic("didntsent")
-    try:
-        os.remove(filename_from_redis)
-        os.remove(filepath)
-    except Exception:
-        pass
+        remove_file_safely(filename_from_redis)
+        remove_file_safely(filepath)
 
 
 def build_file_array(filename_from_redis, filepath):
@@ -43,3 +42,9 @@ def build_file_array(filename_from_redis, filepath):
     elif filepath_ending == "b":
         arr = [("files", open(filename_from_redis, "rb")), ("files", open(filepath, "rb"))]
     return arr
+
+def remove_file_safely(filename):
+    try:
+        os.remove(filename)
+    except:
+        local_logger.log_to_local_file("no such file")
