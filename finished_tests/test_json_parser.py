@@ -4,7 +4,6 @@ import pytest
 
 
 class TestJsonParse():
-
     def test_invalid_file(self):
         with open("file.json", "w+") as file:
             name = file.name
