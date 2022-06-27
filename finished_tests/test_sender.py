@@ -5,7 +5,6 @@ import sender
 
 
 class TestSender():
-
     def test_build_file_array_organized(self):
         with open("a", "w+") as file:
             pass
