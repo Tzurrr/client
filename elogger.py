@@ -15,6 +15,8 @@ def write_logs_to_elastic(event_string):
 
     if url_path == "":
         return
+    if not event_string.strip() or event_string.isspace():
+        raise BlankIndexException
 
     logger = logging.getLogger(event_string)
     logger.setLevel(logging.DEBUG)
