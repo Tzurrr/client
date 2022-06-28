@@ -1,25 +1,29 @@
 import elogger
-import pytest
 import requests
 import json
 import time
+import unittest
 
 
-class TestELogger():
+class TestELogger(unittest.TestCase):
     def test_with_valid_index_name(self):
-        resp = requests.get("http://13.81.211.207:9200/a/_count")
+        count_request_url = "http://13.81.211.207:9200/a/_count"
+        resp = requests.get(count_request_url)
         count_of_documents = json.loads(resp.content.decode())["count"]
 
         a = elogger.write_logs_to_elastic("a")
         time.sleep(1)
 
-        resp = requests.get("http://13.81.211.207:9200/a/_count")
+        resp = requests.get(count_request_url)
         new_count_of_documents = json.loads(resp.content.decode())["count"]
 
-        assert count_of_documents + 1 == new_count_of_documents
+        self.assertEqual((count_of_documents + 1), new_count_of_documents)
 
     def test_with_blank_index_name(self):
-        with pytest.raises(elogger.BlankIndexException):
-            elogger.write_logs_to_elastic("")
+        self.assertRaises(Exception, elogger.write_logs_to_elastic, "")
 
+
+
+if __name__ == '__main__':
+    unittest.main()
 
