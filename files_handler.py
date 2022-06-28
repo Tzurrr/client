@@ -18,3 +18,5 @@ def process_queue(watchdog_queue):
                 sender.send_files_to_server(event.src_path)
             else:
                 r.setex(f"{os.path.splitext(event.src_path)[0][:-2]}", datetime.timedelta(minutes=1), event.src_path)
+        #else:
+        #sleep(0)
