@@ -5,12 +5,16 @@ import unittest
 
 
 class TestSender(unittest.TestCase):
+    # Missed comment for whole test and also for specific lines/decisions
     def setUp(self):
+        
+        # CR: Just open,close wil be enough
         with open("a", "w+") as file:
             pass
         with open("b", "w+") as file:
             pass
-
+         # CR: file handler leak
+         # variable names should be selfexplanatory
         self.local_arr = [("files", open("/home/tzur/client2/a", "rb")), ("files", open("/home/tzur/client2/b", "rb"))]
 
     def test_build_file_array_organized(self):
