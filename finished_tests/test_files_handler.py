@@ -8,6 +8,8 @@ import unittest
 
 class TestFilesHandler(unittest.TestCase):
     def test_save_to_redis(self):
+        # NO FULL PATH
+        # Use pathlib to define platform agnostic path
         with open("/home/tzur/all-the-photos/abc.txt", "w+") as file:
             name = file.name
 
@@ -15,8 +17,9 @@ class TestFilesHandler(unittest.TestCase):
         event = FileClosedEvent(name)
         watchdog_queue.put(event)
         files_handler.process_queue(watchdog_queue)
-
+        # Meaningfull names of variables
         r = redis.Redis()
+        # Define explicitly utf8
         content = r.get(os.path.splitext(name)[0][:-2]).decode()
         self.assertEqual(content, "/home/tzur/all-the-photos/abc.txt")
 
